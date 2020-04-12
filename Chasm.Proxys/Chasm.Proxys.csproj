@@ -9,6 +9,8 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/VoyagerChasm/Chasm</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>1.0.0.10</Version>
+    <AssemblyVersion>1.0.0.10</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
