@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Chasm.Proxys.Test.Modules.Parser
+namespace Chasm.Proxys.Test.Modules.Parsers
 {
     public class StringParserTest
     {
