@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Clients", "Chasm.Clients\Chasm.Clients.csproj", "{D1DCD46F-A745-4987-82C9-BBA0C91D8E0C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Proxys", "Chasm.Proxys\Chasm.Proxys.csproj", "{8013120E-112C-4B08-84DC-37F8E037D129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chasm.Proxys.Test", "Tests\Chasm.Proxys.Test\Chasm.Proxys.Test.csproj", "{C76EC605-661B-4652-B1FB-6DF10B722156}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Proxys.Test", "Tests\Chasm.Proxys.Test\Chasm.Proxys.Test.csproj", "{C76EC605-661B-4652-B1FB-6DF10B722156}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1C5FB490-E6BE-4968-9480-BFABC282CDD4}"
 EndProject
@@ -22,16 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Clients", "Chasm.Clients\Chasm.Clients.csproj", "{B129F9C6-0376-42A6-B93D-1C2077A22463}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D1DCD46F-A745-4987-82C9-BBA0C91D8E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1DCD46F-A745-4987-82C9-BBA0C91D8E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1DCD46F-A745-4987-82C9-BBA0C91D8E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1DCD46F-A745-4987-82C9-BBA0C91D8E0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8013120E-112C-4B08-84DC-37F8E037D129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8013120E-112C-4B08-84DC-37F8E037D129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8013120E-112C-4B08-84DC-37F8E037D129}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -40,6 +36,10 @@ Global
 		{C76EC605-661B-4652-B1FB-6DF10B722156}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C76EC605-661B-4652-B1FB-6DF10B722156}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C76EC605-661B-4652-B1FB-6DF10B722156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
