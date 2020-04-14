@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Clients", "Chasm.Clients\Chasm.Clients.csproj", "{B129F9C6-0376-42A6-B93D-1C2077A22463}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Clients.Test", "Tests\Chasm.Clients.Test\Chasm.Clients.Test.csproj", "{421F7E7A-807E-4888-9900-E598BF764EBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,12 +42,17 @@ Global
 		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B129F9C6-0376-42A6-B93D-1C2077A22463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{421F7E7A-807E-4888-9900-E598BF764EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{421F7E7A-807E-4888-9900-E598BF764EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{421F7E7A-807E-4888-9900-E598BF764EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{421F7E7A-807E-4888-9900-E598BF764EBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C76EC605-661B-4652-B1FB-6DF10B722156} = {1C5FB490-E6BE-4968-9480-BFABC282CDD4}
+		{421F7E7A-807E-4888-9900-E598BF764EBE} = {1C5FB490-E6BE-4968-9480-BFABC282CDD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7580F69-7114-4A6B-8834-43C121EBB245}
