@@ -1,4 +1,5 @@
-﻿using Chasm.Proxys.Modules.Scraper;
+﻿using Chasm.Proxys.Data;
+using Chasm.Proxys.Modules.Scraper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -15,16 +16,10 @@ namespace Chasm.Proxys.Test.Modules.Scrapers
         [InlineData(1, null)]
         [InlineData(1, "")]
         [InlineData(1, " ")]
+        [InlineData(0, Defaults.PROXY_PARSER_REGEX)]
         public void TestConstructorThrowsArgumentException(uint timeout, string regex)
         {
-            Assert.Throws<ArgumentException>(() => new WebScraper(timeout, regex));
-        }
-
-        [Theory]
-        [InlineData(0)]
-        public void TestConstructorThrowsArgumentOutOfRangeException(uint timeout)
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new WebScraper(timeout));
+            Assert.ThrowsAny<Exception>(() => new WebScraper(timeout, regex));
         }
 
         [Theory]
