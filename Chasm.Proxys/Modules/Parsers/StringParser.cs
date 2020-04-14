@@ -13,10 +13,10 @@ namespace Chasm.Proxys.Modules.Parsers
         public HashSet<string> Parse(string source, string regex = Defaults.PROXY_PARSER_REGEX)
         {
             if (string.IsNullOrWhiteSpace(source))
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentException("Source must not be null or empty", nameof(source));
 
             if (string.IsNullOrWhiteSpace(regex))
-                throw new ArgumentNullException(nameof(regex));
+                throw new ArgumentException("Regex must not be null or empty", nameof(regex));
 
             return Regex.Matches(source, regex)
                 .Cast<Match>()

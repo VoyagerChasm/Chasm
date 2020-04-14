@@ -24,7 +24,7 @@ namespace Chasm.Proxys.Modules.Scrapers
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException(nameof(value));
+                    throw new ArgumentException("Regex must nor be null or empty", nameof(Regex));
                 _regex = value;
             }
         }
@@ -35,7 +35,7 @@ namespace Chasm.Proxys.Modules.Scrapers
 
             if (!File.Exists(path))
             {
-                OnErrorScraping(new FileNotFoundException(nameof(path)));
+                OnErrorScraping(new FileNotFoundException("File not found", nameof(path)));
                 return proxy;
             }
 

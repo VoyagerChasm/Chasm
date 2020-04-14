@@ -28,7 +28,7 @@ namespace Chasm.Proxys.Modules.Scrapers
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException(nameof(value), "Timeout was out of range. Must be non-negative and more than zero.");
                 _timeout = value;
             }
         }
@@ -40,7 +40,7 @@ namespace Chasm.Proxys.Modules.Scrapers
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException(nameof(value));
+                    throw new ArgumentException("Regex must nor be null or empty", nameof(Regex));
                 _regex = value;
             }
         }
@@ -48,8 +48,10 @@ namespace Chasm.Proxys.Modules.Scrapers
         protected override void InitGlobalParameters()
         {
             base.InitGlobalParameters();
-            _client = new HttpClient();
-            _client.Timeout = TimeSpan.FromSeconds(Timeout);
+            _client = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(Timeout)
+            };
         }
 
         protected override HashSet<string> Parse(string url, ParallelLoopState state)

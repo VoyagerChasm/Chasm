@@ -73,13 +73,13 @@ namespace Chasm.Proxys.Modules.Scrapers
         protected virtual void ThrowIfParametersIsNotValid(ICollection<T> source)
         {
             if (source is null)
-                throw new ArgumentNullException(nameof(source));
+                throw new ArgumentNullException(nameof(source), "Source must not be null");
 
             if (source.Count < 1)
-                throw new ArgumentOutOfRangeException(nameof(source));
+                throw new ArgumentOutOfRangeException(nameof(source), "Source was out of range. Must be non-negative and more than one.");
 
             if (_cancellationToken is null)
-                throw new ArgumentNullException(nameof(_cancellationToken));
+                throw new ArgumentNullException(nameof(_cancellationToken), "Cancellation Token must not be null");
         }
 
         protected abstract HashSet<string> Parse(T source, ParallelLoopState state);
