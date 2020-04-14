@@ -1,4 +1,4 @@
-﻿using Chasm.Proxys.Modules.Scrapers;
+﻿using Chasm.Proxys.Modules.Scraper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

@@ -1,5 +1,5 @@
 ﻿using Chasm.Proxys.Data;
-using Chasm.Proxys.Modules.Parsers;
+using Chasm.Proxys.Modules.Parser;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -22,10 +22,10 @@ namespace Chasm.Proxys.Test.Modules.Parsers
         [InlineData("")]
         [InlineData(null)]
         [InlineData(" ")]
-        public void TestParseThrowsArgumentNullException(string source, string regex = Defaults.PROXY_PARSER_REGEX)
+        public void TestParseThrowsArgumentException(string source, string regex = Defaults.PROXY_PARSER_REGEX)
         {
             StringParser _stringParser = new StringParser();
-            Assert.Throws<ArgumentNullException>(() => _stringParser.Parse(source, regex));
+            Assert.Throws<ArgumentException>(() => _stringParser.Parse(source, regex));
         }
 
         [Theory]

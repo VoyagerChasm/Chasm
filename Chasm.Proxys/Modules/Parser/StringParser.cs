@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace Chasm.Proxys.Modules.Parsers
+namespace Chasm.Proxys.Modules.Parser
 {
     public class StringParser : IParser<string>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Chasm.Proxys.Modules.Scrapers
+namespace Chasm.Proxys.Modules.Scraper
 {
     public abstract class ParallelScraper<T> : IScraper<ICollection<T>>
     {

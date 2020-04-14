@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Chasm.Proxys.Modules.Scrapers
+namespace Chasm.Proxys.Modules.Scraper
 {
     public interface IScraper<T>
     {

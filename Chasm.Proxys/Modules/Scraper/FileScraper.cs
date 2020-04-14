@@ -1,11 +1,11 @@
 ﻿using Chasm.Proxys.Data;
-using Chasm.Proxys.Modules.Parsers;
+using Chasm.Proxys.Modules.Parser;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Chasm.Proxys.Modules.Scrapers
+namespace Chasm.Proxys.Modules.Scraper
 {
     public class FileScraper : ParallelScraper<string>
     {
@@ -13,7 +13,7 @@ namespace Chasm.Proxys.Modules.Scrapers
 
         public FileScraper(string pattern = Defaults.PROXY_PARSER_REGEX)
         {
-            this.Regex = pattern;
+            Regex = pattern;
             _parser = new StringParser();
         }
 

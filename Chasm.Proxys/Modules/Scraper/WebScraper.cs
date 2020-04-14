@@ -1,11 +1,11 @@
 ﻿using Chasm.Proxys.Data;
-using Chasm.Proxys.Modules.Parsers;
+using Chasm.Proxys.Modules.Parser;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Chasm.Proxys.Modules.Scrapers
+namespace Chasm.Proxys.Modules.Scraper
 {
     public class WebScraper : ParallelScraper<string>
     {

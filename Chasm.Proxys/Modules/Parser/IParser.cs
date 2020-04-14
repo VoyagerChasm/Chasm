@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Chasm.Proxys.Modules.Parsers
+namespace Chasm.Proxys.Modules.Parser
 {
     public interface IParser<T>
     {
