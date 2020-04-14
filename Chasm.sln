@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Clients", "Chasm.Clie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Proxys", "Chasm.Proxys\Chasm.Proxys.csproj", "{8013120E-112C-4B08-84DC-37F8E037D129}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chasm.Proxys.Test", "Tests\Chasm.Proxys.Test\Chasm.Proxys.Test.csproj", "{C76EC605-661B-4652-B1FB-6DF10B722156}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chasm.Proxys.Test", "Tests\Chasm.Proxys.Test\Chasm.Proxys.Test.csproj", "{C76EC605-661B-4652-B1FB-6DF10B722156}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1C5FB490-E6BE-4968-9480-BFABC282CDD4}"
 EndProject
@@ -21,8 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chasm.Clients.Test", "Tests\Chasm.Clients.Test\Chasm.Clients.Test.csproj", "{2B2DCF2D-3A95-4474-929A-05DCDD03FFA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,17 +40,12 @@ Global
 		{C76EC605-661B-4652-B1FB-6DF10B722156}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C76EC605-661B-4652-B1FB-6DF10B722156}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C76EC605-661B-4652-B1FB-6DF10B722156}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B2DCF2D-3A95-4474-929A-05DCDD03FFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B2DCF2D-3A95-4474-929A-05DCDD03FFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B2DCF2D-3A95-4474-929A-05DCDD03FFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B2DCF2D-3A95-4474-929A-05DCDD03FFA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C76EC605-661B-4652-B1FB-6DF10B722156} = {1C5FB490-E6BE-4968-9480-BFABC282CDD4}
-		{2B2DCF2D-3A95-4474-929A-05DCDD03FFA3} = {1C5FB490-E6BE-4968-9480-BFABC282CDD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7580F69-7114-4A6B-8834-43C121EBB245}
