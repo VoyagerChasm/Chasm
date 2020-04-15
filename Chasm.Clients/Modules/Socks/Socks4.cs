@@ -23,8 +23,7 @@ namespace Chasm.Clients.Modules.Socks
 
         protected readonly string _userId;
 
-
-        public Socks4(string host, uint port, IDnsResolver resolver = null) : base(host, port, resolver)
+        public Socks4(IDnsResolver resolver = null) : base(resolver)
         {
             _userId = "";
 
@@ -32,7 +31,7 @@ namespace Chasm.Clients.Modules.Socks
                 _resolver = new SystemDnsResolver();
         }
 
-        public Socks4(string host, uint port, string userId, IDnsResolver resolver = null) : base(host, port, resolver)
+        public Socks4(string userId, IDnsResolver resolver = null) : base(resolver)
         {
             _userId = userId;
 
@@ -41,12 +40,19 @@ namespace Chasm.Clients.Modules.Socks
         }
 
 
-        public override void Connect(Socket socket)
+
+        public override void CreateTunnel(Socket socket, string host, uint port)
         {
             if (socket is null)
                 throw new ArgumentNullException(nameof(socket), "Socket has to be not null");
 
-            var msg = BuildRequestMessage();
+            if (string.IsNullOrWhiteSpace(host))
+                throw new ArgumentException(nameof(host), "Address must to be not null or empty");
+
+            if (port < 1 || port > 65535)
+                throw new ArgumentOutOfRangeException(nameof(port), "Port must be greater than 0 and less than 65535");
+
+            var msg = BuildRequestMessage(host, (int)port);
             socket.Send(msg);
 
             var response = new byte[8];
@@ -59,7 +65,7 @@ namespace Chasm.Clients.Modules.Socks
         }
 
 
-        protected internal virtual byte[] BuildRequestMessage()
+        protected internal virtual byte[] BuildRequestMessage(string host, int port)
         {
             // PROXY SERVER REQUEST
             // The client connects to the SOCKS server and sends a CONNECT request when
@@ -79,8 +85,8 @@ namespace Chasm.Clients.Modules.Socks
             //  userId needs to be a zero length string so that the GetBytes method
             //  works properly
 
-            var destIp = GetIPAddressBytes();
-            var destPort = GetDestinationPortBytes();
+            var destIp = GetIPAddressBytes(host);
+            var destPort = GetPortByte(port);
             var userIdBytes = Encoding.ASCII.GetBytes(_userId);
             var request = new byte[9 + userIdBytes.Length];
 
@@ -95,21 +101,21 @@ namespace Chasm.Clients.Modules.Socks
             return request;
         }
 
-        private byte[] GetIPAddressBytes()
+        private byte[] GetIPAddressBytes(string host)
         {
             //  if the address doesn't parse then try to resolve with dns
-            if (!IPAddress.TryParse(_host, out var ipAddr))
-                ipAddr = _resolver.Resolve(_host);
+            if (!IPAddress.TryParse(host, out var ipAddr))
+                ipAddr = _resolver.Resolve(host);
 
             // return address bytes
             return ipAddr.GetAddressBytes();
         }
 
-        protected internal byte[] GetDestinationPortBytes()
+        protected internal byte[] GetPortByte(int port)
         {
             var array = new byte[2];
-            array[0] = Convert.ToByte((int)_port / 256);
-            array[1] = Convert.ToByte((int)_port % 256);
+            array[0] = Convert.ToByte(port / 256);
+            array[1] = Convert.ToByte(port % 256);
             return array;
         }
 

@@ -5,15 +5,15 @@ namespace Chasm.Clients.Modules.Socks
 {
     public class Socks4a : Socks4
     {
-        public Socks4a(string host, uint port, IDnsResolver resolver = null) : base(host, port, resolver)
+        public Socks4a(IDnsResolver resolver = null) : base(resolver)
         {
         }
 
-        public Socks4a(string host, uint port, string userId, IDnsResolver resolver = null) : base(host, port, userId, resolver)
+        public Socks4a(string userId, IDnsResolver resolver = null) : base(userId, resolver)
         {
         }
 
-        protected internal override byte[] BuildRequestMessage()
+        protected internal override byte[] BuildRequestMessage(string host, int port)
         {
             // PROXY SERVER REQUEST
             //Please read SOCKS4.protocol first for an description of the version 4
@@ -52,9 +52,9 @@ namespace Chasm.Clients.Modules.Socks
             //the next-hop SOCKS server.    
 
             byte[] destIp = { 0, 0, 0, 1 };  // build the invalid ip address as specified in the 4a protocol
-            var destPort = GetDestinationPortBytes();
+            var destPort = GetPortByte(port);
             var userIdBytes = Encoding.ASCII.GetBytes(_userId);
-            var hostBytes = Encoding.ASCII.GetBytes(_host);
+            var hostBytes = Encoding.ASCII.GetBytes(host);
             var request = new byte[10 + userIdBytes.Length + hostBytes.Length];
 
             request[0] = SOCKS4_VERSION_NUMBER;

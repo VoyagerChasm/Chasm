@@ -45,19 +45,25 @@ namespace Chasm.Clients.Modules.Socks
         private const byte SOCKS5_CMD_REPLY_COMMAND_NOT_SUPPORTED = 0x07;
         private const byte SOCKS5_CMD_REPLY_ADDRESS_TYPE_NOT_SUPPORTED = 0x08;
 
-        public Socks5(string host, uint port, IDnsResolver resolver = null) : base(host, port, resolver)
+        public Socks5(IDnsResolver resolver = null) : base(resolver)
         {
         }
 
-        public Socks5(string host, uint port, string username, string password, IDnsResolver resolver = null) : base(host, port, username, password, resolver)
+        public Socks5(string username, string password, IDnsResolver resolver = null) : base(username, password, resolver)
         {
         }
 
 
-        public override void Connect(Socket socket)
+        public override void CreateTunnel(Socket socket, string host, uint port)
         {
             if (socket is null)
                 throw new ArgumentNullException(nameof(socket), "Socket has to be not null");
+
+            if (string.IsNullOrWhiteSpace(host))
+                throw new ArgumentException(nameof(host), "Address must to be not null or empty");
+
+            if (port < 1 || port > 65535)
+                throw new ArgumentOutOfRangeException(nameof(port), "Port must be greater than 0 and less than 65535");
 
             var ngAuthMsg = BuildNeogtiateAuthenticationMessage(_auth);
             socket.Send(ngAuthMsg);
@@ -82,14 +88,14 @@ namespace Chasm.Clients.Modules.Socks
                 VaidateAuthenticationMessageRespone(authMsgByte);
             }
 
-            var addressType = GetAddressType();
+            var addressType = GetAddressType(host);
             if (addressType == SOCKS5_ADDRTYPE_DOMAIN_NAME && _resolver != null)
-                if (_resolver.TryResolve(_host, out var ipAddress))
-                    _host = ipAddress.ToString();
+                if (_resolver.TryResolve(host, out var ipAddress))
+                    host = ipAddress.ToString();
                 else
                     throw new Socks5Exception("Destination address unreachable.");
 
-            var connectCmdMsg = BuildRequestMessage(SOCKS5_CMD_CONNECT, addressType);
+            var connectCmdMsg = BuildRequestMessage(SOCKS5_CMD_CONNECT, addressType, host, (int)port);
             socket.Send(connectCmdMsg);
 
             var connectCmdMsgByte = new byte[255];
@@ -212,7 +218,7 @@ namespace Chasm.Clients.Modules.Socks
                 throw new Socks5Exception("Username or password is not valid.");
         }
 
-        private byte GetAddressType()
+        private byte GetAddressType(string _host)
         {
             var result = IPAddress.TryParse(_host, out IPAddress ipAddr);
 
@@ -227,9 +233,9 @@ namespace Chasm.Clients.Modules.Socks
             };
         }
 
-        private byte[] BuildRequestMessage(byte command, byte addressType)
+        private byte[] BuildRequestMessage(byte command, byte addressType, string _host, int _port)
         {
-            var addressBytes = GetAddressBytes(addressType);
+            var addressBytes = GetAddressBytes(addressType, _host);
             var addressLength = addressBytes.Length;
 
             //  The connection request is made up of 6 bytes plus the
@@ -262,13 +268,13 @@ namespace Chasm.Clients.Modules.Socks
             request[3] = addressType;
 
             Array.Copy(addressBytes, 0, request, 4, addressLength);
-            request[^2] = (byte)((int)_port / 256);
-            request[^1] = (byte)((int)_port % 256);
+            request[^2] = (byte)(_port / 256);
+            request[^1] = (byte)(_port % 256);
 
             return request;
         }
 
-        private byte[] GetAddressBytes(byte addressType)
+        private byte[] GetAddressBytes(byte addressType, string _host)
         {
             switch (addressType)
             {

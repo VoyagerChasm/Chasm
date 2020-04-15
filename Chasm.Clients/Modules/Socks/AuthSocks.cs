@@ -9,12 +9,12 @@ namespace Chasm.Clients.Modules.Socks
         protected readonly string _username;
         protected readonly string _password;
 
-        public AuthSocks(string host, uint port, IDnsResolver resolver = null) : base(host, port, resolver)
+        public AuthSocks(IDnsResolver resolver = null) : base(resolver)
         {
             _auth = false;
         }
 
-        public AuthSocks(string host, uint port, string username, string password, IDnsResolver resolver = null) : this(host, port, resolver)
+        public AuthSocks(string username, string password, IDnsResolver resolver = null) : this(resolver)
         {
             _auth = true;
 
