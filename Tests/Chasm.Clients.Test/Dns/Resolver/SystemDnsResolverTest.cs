@@ -1,8 +1,8 @@
-﻿using Chasm.Clients.Modules.DnsResolver;
+﻿using Chasm.Clients.Dns.Resolver;
 using System;
 using Xunit;
 
-namespace Chasm.Clients.Test.Modules.DnsResolver
+namespace Chasm.Clients.Test.Dns.Resolver
 {
     public class SystemDnsResolverTest
     {

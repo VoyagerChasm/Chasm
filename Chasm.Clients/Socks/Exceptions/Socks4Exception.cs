@@ -1,4 +1,4 @@
-﻿namespace Chasm.Clients.Modules.Socks.Exceptions
+﻿namespace Chasm.Clients.Socks.Exceptions
 {
     public class Socks4Exception : SocksException
     {

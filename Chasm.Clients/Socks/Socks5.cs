@@ -1,15 +1,20 @@
-﻿using Chasm.Clients.Modules.DnsResolver;
-using Chasm.Clients.Modules.Socks.Exceptions;
+﻿using Chasm.Clients.Dns.Resolver;
+using Chasm.Clients.Socks.Exceptions;
+using Chasm.Models;
 using System;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Chasm.Clients.Modules.Socks
+namespace Chasm.Clients.Socks
 {
-    public class Socks5 : AuthSocks
+    /// <summary>
+    /// Rapresent a Socks5 standard implementation.
+    /// </summary>
+    public class Socks5 : Socks, ISocks5
     {
+
 
         private const byte SOCKS5_VERSION_NUMBER = 0x05;
 
@@ -45,27 +50,35 @@ namespace Chasm.Clients.Modules.Socks
         private const byte SOCKS5_CMD_REPLY_COMMAND_NOT_SUPPORTED = 0x07;
         private const byte SOCKS5_CMD_REPLY_ADDRESS_TYPE_NOT_SUPPORTED = 0x08;
 
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="resolver">A custom DNS Resolver</param>
         public Socks5(IDnsResolver resolver = null) : base(resolver)
         {
         }
 
-        public Socks5(string username, string password, IDnsResolver resolver = null) : base(username, password, resolver)
+
+
+        /// <summary>
+        /// Create a pass through connection to the specified destination host.
+        /// </summary>
+        /// <see cref="ISocks"></see>
+        /// <param name="socket">The socket connected to the Socks Server</param>
+        /// <param name="destinationAddress">The destination host and port where the Socks Server have to Connect</param>
+        /// <param name="proxyCredentials">The proxy credentials of the Socks Server</param>
+        public void CreateTunnel(Socket socket, Models.Sockets.SocketAddress destination, Credential proxyCredentials)
         {
-        }
+            if (socket == null)
+                throw new ArgumentNullException(nameof(socket), $"{nameof(socket)} has to be not null");
 
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination), $"{nameof(destination)} has to be not null");
 
-        public override void CreateTunnel(Socket socket, string host, uint port)
-        {
-            if (socket is null)
-                throw new ArgumentNullException(nameof(socket), "Socket has to be not null");
-
-            if (string.IsNullOrWhiteSpace(host))
-                throw new ArgumentException(nameof(host), "Address must to be not null or empty");
-
-            if (port < 1 || port > 65535)
-                throw new ArgumentOutOfRangeException(nameof(port), "Port must be greater than 0 and less than 65535");
-
-            var ngAuthMsg = BuildNeogtiateAuthenticationMessage(_auth);
+            var auth = proxyCredentials != null;
+            var ngAuthMsg = BuildNeogtiateAuthenticationMessage(auth);
             socket.Send(ngAuthMsg);
 
             var ngAuthMsgByte = new byte[2];
@@ -73,11 +86,11 @@ namespace Chasm.Clients.Modules.Socks
             if (socket.Receive(ngAuthMsgByte) != 2)
                 throw new Socks5Exception("Invalid response size. Negotiation message response for authentication must be 2 byte.");
 
-            VaidateNeogtiateAuthenticationMessageRespone(ngAuthMsgByte, _auth);
+            VaidateNeogtiateAuthenticationMessageRespone(ngAuthMsgByte, auth);
 
-            if (_auth)
+            if (auth)
             {
-                var authMsg = BuildAuthenticationMessage();
+                var authMsg = BuildAuthenticationMessage(proxyCredentials.Username, proxyCredentials.Password);
                 socket.Send(authMsg);
 
                 var authMsgByte = new byte[2];
@@ -88,14 +101,15 @@ namespace Chasm.Clients.Modules.Socks
                 VaidateAuthenticationMessageRespone(authMsgByte);
             }
 
-            var addressType = GetAddressType(host);
-            if (addressType == SOCKS5_ADDRTYPE_DOMAIN_NAME && _resolver != null)
-                if (_resolver.TryResolve(host, out var ipAddress))
-                    host = ipAddress.ToString();
+            var addressType = GetAddressType(destination.Host);
+            var resolvedIp = destination.Host;
+            if (addressType == SOCKS5_ADDRTYPE_DOMAIN_NAME && Resolver != null)
+                if (Resolver.TryResolve(destination.Host, out var ipAddress))
+                    resolvedIp = ipAddress.ToString();
                 else
                     throw new Socks5Exception("Destination address unreachable.");
 
-            var connectCmdMsg = BuildRequestMessage(SOCKS5_CMD_CONNECT, addressType, host, (int)port);
+            var connectCmdMsg = BuildRequestMessage(SOCKS5_CMD_CONNECT, addressType, resolvedIp, destination.Port);
             socket.Send(connectCmdMsg);
 
             var connectCmdMsgByte = new byte[255];
@@ -103,6 +117,7 @@ namespace Chasm.Clients.Modules.Socks
 
             ValidateRequestMessageResponse(connectCmdMsgRecByte, connectCmdMsgByte);
         }
+
 
 
         private byte[] BuildNeogtiateAuthenticationMessage(bool authenticate)
@@ -159,7 +174,7 @@ namespace Chasm.Clients.Modules.Socks
                 throw new Socks5Exception("No authentication requested.");
         }
 
-        private byte[] BuildAuthenticationMessage()
+        private byte[] BuildAuthenticationMessage(string username, string password)
         {
             // USERNAME / PASSWORD SERVER REQUEST
             // Once the SOCKS V5 server has started, and the client has selected the
@@ -176,11 +191,11 @@ namespace Chasm.Clients.Modules.Socks
             // create a data structure (binary array) containing credentials
             // to send to the proxy server which consists of clear username and password data
 
-            var usernameBytes = Encoding.UTF8.GetBytes(_username);
+            var usernameBytes = Encoding.UTF8.GetBytes(username);
             if (usernameBytes.Length > 255)
                 throw new ArgumentOutOfRangeException("Username is too long");
 
-            var passwordBytes = Encoding.UTF8.GetBytes(_password);
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
             if (passwordBytes.Length > 255)
                 throw new ArgumentOutOfRangeException("Password is too long");
 
@@ -371,7 +386,5 @@ namespace Chasm.Clients.Modules.Socks
                     else if (byteRecived != 7 + response[4])
                         throw new Socks5Exception("Invalid Domain Address response size.");
         }
-
-
     }
 }

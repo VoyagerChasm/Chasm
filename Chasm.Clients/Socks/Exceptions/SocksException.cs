@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chasm.Clients.Modules.Socks.Exceptions
+namespace Chasm.Clients.Socks.Exceptions
 {
     public class SocksException : Exception
     {
