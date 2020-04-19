@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/VoyagerChasm/Chasm</RepositoryUrl>
+    <Authors>VoyagerChasm</Authors>
+    <Product>Chasm</Product>
+    <Company />
+    <Version>1.0.0.0</Version>
+  </PropertyGroup>
+
+</Project>
