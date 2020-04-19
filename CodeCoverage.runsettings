@@ -10,6 +10,8 @@
             <ModulePaths>
               <Exclude>
                 <ModulePath>.*\\Chasm\.Proxys\.Test\.dll$</ModulePath>
+                <ModulePath>.*\\Chasm\.Models\.Test\.dll$</ModulePath>
+                <ModulePath>.*\\Chasm\.Clients\.Test\.dll$</ModulePath>
                 <ModulePath>.*xunit.*</ModulePath>
               </Exclude>
             </ModulePaths>
